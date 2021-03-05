@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import TodoInsert from './component/TodoInsert';
+import TodoList from './component/TodoList';
+import TodoStatus from './component/TodoStatus';
+import { Todo, TodoSamples } from './util/todo';
 
-function App() {
+export default function App(): JSX.Element {
+  const [todoList, setTodoList] = useState<Array<Todo>>([]);
+  // const total = todoList.length;
+  const [total, setTotal] = useState<number>(0);
+  useEffect(() => {
+    setTotal(todoList.length);
+  }, [todoList]);
+  // const done = todoList.filter(todo => todo?.complete === true).length;
+  const [done, setDone] = useState<number>(0);
+  useEffect(() => {
+    setDone(todoList.filter(todo => todo?.complete === true).length);
+  }, [todoList]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TodoStatus total={total} done={done} />
+      <TodoInsert />
+      <TodoList todoList={todoList} />
     </div>
   );
 }
-
-export default App;
