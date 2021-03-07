@@ -1,16 +1,29 @@
 import React from 'react';
 import TodoItem from './TodoItem';
-import { Todo } from '../util/todo';
 
-type TodoListProps = {
+interface TodoListProps {
   todoList: Array<Todo>;
-};
+  toggleTodo: ToggleTodo;
+  modifyTodo: ModifyTodo;
+  deleteTodo: DeleteTodo;
+}
 
-export default function TodoList({ todoList }: TodoListProps): JSX.Element {
+export default function TodoList({
+  todoList,
+  toggleTodo,
+  modifyTodo,
+  deleteTodo
+}: TodoListProps): JSX.Element {
   return (
     <div>
       {todoList.map(todo => (
-        <TodoItem todo={todo} />
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          toggleTodo={toggleTodo}
+          modifyTodo={modifyTodo}
+          deleteTodo={deleteTodo}
+        />
       ))}
     </div>
   );

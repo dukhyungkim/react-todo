@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 
-export default function TodoInsert(): JSX.Element {
-  const [taskInput, setTaskInput] = useState('');
+interface TodoInsertProps {
+  addTodo: (newTask: string) => void;
+}
+
+export default function TodoInsert({ addTodo }: TodoInsertProps): JSX.Element {
+  const [task, setTask] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskInput(e.target.value);
+    setTask(e.target.value);
+  };
+
+  const handleAdd = () => {
+    addTodo(task);
   };
 
   return (
     <div>
-      <input type="text" onChange={handleChange} />
-      <button
-        type="button"
-        onClick={() => console.log(`Will add todo: ${taskInput}`)}
-      >
+      <input type="text" value={task} onChange={handleChange} />
+      <button type="button" onClick={handleAdd}>
         Add
       </button>
     </div>
